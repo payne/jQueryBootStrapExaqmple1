@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>My Example</title>
+  <title>Example TechOmaha Dataset Example</title>
   <!-- Latest compiled and minified Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -49,6 +49,7 @@
 
       <div role="tabpanel" class="tab-pane fade show active" id="home" aria-labelledby="home-tab">
         <p>Welcome home! Click on the tabs to see the content change.</p>
+        <div id="clubs"></div>
       </div>
 
       <div role="tabpanel" class="tab-pane fade" id="hats" aria-labelledby="hats-tab">
@@ -73,9 +74,7 @@
   </div>
 
   <!-- jQuery library -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
 
   <!-- Popper -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -98,6 +97,24 @@
     $(function () {
       $('[data-toggle="popover"]').popover()
     })
+
+    $(document).ready(function () {
+      console.log("ready!");
+      $.get("https://raw.githubusercontent.com/TechOmaha/TechOmaha.Dataset/master/TechOmaha.json", {}, function (results) {
+        //console.log(results);
+        //debugger;
+        const t = JSON.parse(results);
+        const d = $('#clubs');
+        let clubHtml = `<h1>${t.lastUpdate}</h1><ol>`;
+        const active = t.groups.filter(g => g.active === true);
+        active.forEach(g => {
+          clubHtml = clubHtml + `<li>${g.name}</li>`
+        });
+        clubHtml = clubHtml + `</ol>`;
+        d.append(clubHtml);
+      }); // $.get
+
+    });
   </script>
 </body>
 
